@@ -1,0 +1,6 @@
+<h1>Weather App</h1>
+<%= form_with url: "weather", method: :get do |form| %>
+  <%= form.label :zipcode, "ZipCode" %>
+  <%= form.search_field :zipcode, :required => true%>
+  <%= form.submit "Get Weather" %>
+<% end %>
