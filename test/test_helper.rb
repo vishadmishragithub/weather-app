@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 require "webmock/minitest"
+require "minitest/autorun"
 
 module ActiveSupport
   class TestCase
@@ -19,7 +20,7 @@ module ActiveSupport
 
     def stub_failed_nominatim_response(zipcode)
       stub_request(:get, "https://nominatim.openstreetmap.org/search.php")
-        .with(query: { "addressdetails" => 1, "format" => "jsonv2", "postalcode" => "error" })
+        .with(query: { "addressdetails" => 1, "format" => "jsonv2", "postalcode" => zipcode })
         .to_return(body: "[]", status: 200)
     end
   end
