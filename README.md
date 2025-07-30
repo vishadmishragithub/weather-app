@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+1. Follow the ruby and rails setup - https://guides.rubyonrails.org/install_ruby_on_rails.html
 
-* Ruby version
+2.Ensure the following ruby version
 
-* System dependencies
+```
+$ ruby --version
+ruby 3.4.5 (2025-07-16 revision 20cda200d3) +PRISM [x86_64-darwin21]
+```
 
-* Configuration
+3. Ensure the following rails version
 
-* Database creation
+```
+$ rails --version
+Rails 8.0.2
+```
 
-* Database initialization
+4. Run `bundle install`
 
-* How to run the test suite
+5. Run the app with `rails s`
 
-* Services (job queues, cache servers, search engines, etc.)
+## Run Tests
 
-* Deployment instructions
+You can run the tests with `rails test test:system`
 
-* ...
+- Services (job queues, cache servers, search engines, etc.)
+
+- Deployment instructions
+
+- ...
