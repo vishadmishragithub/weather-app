@@ -1,3 +1,21 @@
-<h1> Current temperature - <%= @weather[:temperature] %> C</h1>
+<h1> Weather for <%= @zipcode %></h1>
+
+<div>
+    <h3>Current temperature - <%= @weather.current_temp %> C</h3>
+</div>
+
+<h3> Highest and Lowest temperature for the week </h3>
+<ul>
+    <% @weather.daily_high_low_temp.each do |daily_high_low_temp| %>
+        <li> 
+                <p><%= daily_high_low_temp.date.to_s %></p>
+                <p><%= daily_high_low_temp.date.strftime("%A") %></p>
+                <p> High - <%= daily_high_low_temp.high %></p>
+                <p> Low - <%= daily_high_low_temp.low %></p>
+        </li>
+    <% end %>
+</ul>
 
 <%= link_to "Back", root_path %>
+
+<%= stylesheet_link_tag "weather" %>

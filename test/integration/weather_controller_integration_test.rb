@@ -2,10 +2,12 @@ require "test_helper"
 
 class WeatherControllerIntegrationTest < ActionDispatch::IntegrationTest
   test "should show the weather page" do
-    stub_successfull_nominatim_response("test")
+    coordinate = CoordinateDto.new(1,2)
+    stub_successfull_nominatim_response("test", coordinate: coordinate)
+    stub_successfull_open_meteo_response(coordinate, expected_current_temp: 21)
     get weather_path, params: { zipcode: "test" }
 
-    assert_dom "h1", "Current temperature - 12 C"
+    assert_dom "h3", "Current temperature - 21 C"
   end
 
   test "should redirect to the root page" do

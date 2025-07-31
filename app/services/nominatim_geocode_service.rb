@@ -3,22 +3,23 @@ class NominatimGeocodeService
 
     require "uri"
     require "net/http"
+    @@lat_key = "lat"
+    @@lon_key = "lon"
+    @@response_format = "jsonv2"
     @@url = "https://nominatim.openstreetmap.org/search.php"
-    @@query_params = { format: "jsonv2", addressdetails: 1 }
     @@user_agent = { "User-Agent" => "Mozilla/5.0 (compatible; WeatherApp/1.0)" }
 
     # Geocode service from nominatim - https://nominatim.org/release-docs/develop/api/Search/
     def get_lat_lon(zipcode)
         response = request_lat_lon(zipcode)
-        get_coordinate(response)
+        build_coordiate_dto(response)
     end
 
     private
 
     def request_lat_lon(zipcode)
         uri = URI(@@url)
-        query_params = { "postalcode" => "#{zipcode}" }.merge(@@query_params)
-        uri.query = URI.encode_www_form(query_params)
+        uri.query = URI.encode_www_form(build_query_params(zipcode))
         response = Net::HTTP.get_response(uri, @@user_agent)
 
         # Verify response code
@@ -26,11 +27,19 @@ class NominatimGeocodeService
         response
     end
 
-    def get_coordinate(response)
+    def build_query_params(zipcode)
+        {
+            format: @@response_format,
+            addressdetails: 1,
+            postalcode: zipcode.to_s
+        }
+    end
+
+    def build_coordiate_dto(response)
         parsed_json = JSON.parse(response.body)
         # Response is empty if zipcode is invalid (Ex: error)
         raise WeatherController::AddressNotFound.new("Adress Not Found") if parsed_json[0].nil?
 
-        CoordinateDto.new(parsed_json[0]["lat"], parsed_json[0]["lon"])
+        CoordinateDto.new(parsed_json[0][@@lat_key], parsed_json[0][@@lon_key])
     end
 end

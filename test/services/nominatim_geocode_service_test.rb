@@ -15,9 +15,9 @@ class NominatimGeocodeServiceTest < ActiveSupport::TestCase
     assert_raises(WeatherController::AddressNotFound) { NominatimGeocodeService.new.get_lat_lon("error") }
   end
 
-  test "it returns error when nomatim responds with error" do
+  test "it raises error when nomatim responds with error" do
    stub_request(:get, "https://nominatim.openstreetmap.org/search.php")
-    .with(query: { "addressdetails" => 1, "format" => "jsonv2", "postalcode" => "error" })
+    .with(query: { addressdetails: 1, format: "jsonv2", postalcode: "error" })
     .to_return(body: "[]", status: 500)
 
     assert_raises(WeatherController::AddressNotFound) { NominatimGeocodeService.new.get_lat_lon("error") }
