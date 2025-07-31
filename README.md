@@ -22,9 +22,13 @@ Rails 8.0.2
 
 5. Run the app with `rails s`
 
-## Run Tests
+## Run Tests (Linting and tests are also run with every commit)
 
 You can run the tests with `rails test`
+
+## Application video
+
+https://github.com/user-attachments/assets/6679fd2f-e0f5-4362-afd2-07222bd2ccda
 
 ## Application architecture
 
