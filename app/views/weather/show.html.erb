@@ -1,4 +1,4 @@
-<h1> Weather for <%= @zipcode %></h1>
+<h1> Weather for <%= @zipcode %> <%= "is cached" if @cached %></h1>
 
 <div>
     <h3>Current temperature - <%= @weather.current_temp %> C</h3>

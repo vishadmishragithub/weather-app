@@ -12,10 +12,10 @@ class OpenMeteoForcastServiceTest < ActiveSupport::TestCase
       date: date)
 
     weather = OpenMeteoForcastService.new.get_forcast(coordinate)
-    assert(weather.current_temp == 21, "Wrong weather")
-    assert(weather.daily_high_low_temp[0].date == date, "Wrong high low forcast date")
-    assert(weather.daily_high_low_temp[0].high == 25, "Wrong high low forcast high")
-    assert(weather.daily_high_low_temp[0].low == 19, "Wrong high low forcast low")
+    assert_equal(21, weather.current_temp)
+    assert_equal(date, weather.daily_high_low_temp[0].date)
+    assert_equal(25, weather.daily_high_low_temp[0].high)
+    assert_equal(19, weather.daily_high_low_temp[0].low)
   end
 
   test "it raises error when open meteo responds with error" do

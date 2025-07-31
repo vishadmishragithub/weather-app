@@ -5,8 +5,8 @@ class NominatimGeocodeServiceTest < ActiveSupport::TestCase
     stub_successfull_nominatim_response("test")
 
     coordinate = NominatimGeocodeService.new.get_lat_lon("test")
-    assert(coordinate.lat == 1, "Wrong coordinate")
-    assert(coordinate.lon == 2, "Wrong coordinate")
+    assert_equal(1, coordinate.lat)
+    assert_equal(2, coordinate.lon)
   end
 
   test "it raises error for a fake zipcode" do

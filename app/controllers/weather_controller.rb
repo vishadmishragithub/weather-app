@@ -1,4 +1,5 @@
 class WeatherController < ApplicationController
+  @@cache_expires_in = 30.minutes
   class AddressNotFound < StandardError
   end
 
@@ -17,8 +18,15 @@ class WeatherController < ApplicationController
       return redirect_to root_path, notice: "Address not found"
     end
 
-    coordinate = @geocode_service.get_lat_lon(@zipcode)
-    @weather = @forcast_service.get_forcast(coordinate)
+    @cached = true
+    @weather = Rails.cache.fetch(@zipcode.to_s,
+        namespace: WeatherController.to_s,
+        expires_at: (Time.now + @@cache_expires_in)
+      ) do
+      @cached = false
+      coordinate = @geocode_service.get_lat_lon(@zipcode)
+      @forcast_service.get_forcast(coordinate)
+    end
   rescue AddressNotFound, ForcastServiceError => e
       # Log zipcode and error to investage further
       puts @zipcode, e unless Rails.env.test?
