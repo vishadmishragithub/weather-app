@@ -38,3 +38,8 @@ The application uses an MVC architecture but services are fetching data instead 
 
 ![alt text](weather_controller_flow_with_cache.png)
 ![alt text](weather_controller_flow_without_cache.png)
+
+## Next steps to ensure live deployments are robust
+* Add github rules to ensure PR for merging
+* Add system tests that test integration with external systems
+  
