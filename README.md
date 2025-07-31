@@ -24,10 +24,13 @@ Rails 8.0.2
 
 ## Run Tests
 
-You can run the tests with `rails test test:system`
+You can run the tests with `rails test`
 
-- Services (job queues, cache servers, search engines, etc.)
+## Application architecture
 
-- Deployment instructions
+The application uses an MVC architecture but services are fetching data instead of models. We have services to external api's which can be substitued any time as they are decoupled from the controller with an abstract service and DTO. An inmemory cache is used and it uses LRU eviction by default. The apps entry point is HomeController which takes an address(just a zipcode) for now and forwards the request to weather controller. Weather controller architecture is show below. If an error is thrown the user is redirected back to home screen, can be tested by using "error" as zipcode.
 
-- ...
+## WeatherController architecture
+
+![alt text](weather_controller_flow_with_cache.png)
+![alt text](weather_controller_flow_without_cache.png)
